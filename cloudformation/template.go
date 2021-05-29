@@ -2,9 +2,9 @@ package cloudformation
 
 import (
 	"encoding/json"
-
-	"github.com/wizrocket/goformation/intrinsics"
 	"github.com/sanathkr/yaml"
+	"github.com/wizrocket/goformation/cloudformation"
+	"github.com/wizrocket/goformation/intrinsics"
 )
 
 // Template represents an AWS CloudFormation template
@@ -83,7 +83,8 @@ func (t *Template) JSON() ([]byte, error) {
 		return nil, err
 	}
 
-	return intrinsics.ProcessJSON(j, nil)
+	return intrinsics.ProcessJSON(j, &intrinsics.ProcessorOptions{
+		IntrinsicHandlerOverrides: cloudformation.EncoderIntrinsics})
 
 }
 
